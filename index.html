@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>상여자 티셔츠 입금 안내</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', sans-serif; }
+    .wrap { background: #000; min-height: 100vh; padding: 0 0 60px; color: #fff; }
+    .hero { padding: 48px 24px 32px; text-align: center; border-bottom: 0.5px solid #222; }
+    .hero-tag { font-size: 11px; letter-spacing: 0.15em; color: #FF2D9B; text-transform: uppercase; margin-bottom: 12px; }
+    .hero-title { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 8px; }
+    .hero-sub { font-size: 14px; color: #888; line-height: 1.6; }
+    .input-section { padding: 32px 24px 0; }
+    .input-label { font-size: 12px; letter-spacing: 0.1em; color: #FF2D9B; margin-bottom: 10px; display: block; }
+    .input-row { display: flex; gap: 10px; align-items: center; }
+    .phone-input { flex: 1; background: #111; border: 1px solid #333; border-radius: 12px; color: #fff; font-size: 22px; font-weight: 600; padding: 16px 20px; text-align: center; letter-spacing: 0.2em; outline: none; }
+    .phone-input:focus { border-color: #FF2D9B; }
+    .phone-input::placeholder { color: #444; font-size: 18px; letter-spacing: 0.1em; }
+    .search-btn { background: #FF2D9B; border: none; border-radius: 12px; color: #fff; font-size: 14px; font-weight: 700; padding: 16px 20px; cursor: pointer; white-space: nowrap; letter-spacing: 0.05em; }
+    .search-btn:active { opacity: 0.8; transform: scale(0.97); }
+    .hint { font-size: 12px; color: #555; margin-top: 10px; text-align: center; }
+    .result { display: none; padding: 28px 24px 0; }
+    .result.show { display: block; }
+    .result-card { background: #111; border: 0.5px solid #222; border-radius: 20px; overflow: hidden; }
+    .name-banner { background: linear-gradient(135deg, #FF2D9B 0%, #c0006e 100%); padding: 24px; }
+    .name-hello { font-size: 12px; letter-spacing: 0.12em; color: rgba(255,255,255,0.75); margin-bottom: 6px; }
+    .name-main { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
+    .name-total { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 4px; }
+    .order-section { padding: 20px 20px 0; }
+    .section-title { font-size: 11px; letter-spacing: 0.12em; color: #555; margin-bottom: 12px; }
+    .size-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 0.5px solid #1e1e1e; }
+    .size-row:last-child { border-bottom: none; }
+    .size-label { font-size: 16px; font-weight: 500; color: #ddd; }
+    .size-badge { background: #FF2D9B; color: #fff; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
+    .price-section { padding: 20px; border-top: 0.5px solid #1e1e1e; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .price-label { font-size: 13px; color: #777; }
+    .price-amount { font-size: 28px; font-weight: 800; color: #FF2D9B; letter-spacing: -1px; }
+    .account-section { padding: 0 24px; margin-top: 20px; }
+    .account-card { background: #111; border: 1px solid #2a2a2a; border-radius: 20px; padding: 20px; }
+    .acc-tag { font-size: 11px; letter-spacing: 0.12em; color: #FF2D9B; margin-bottom: 12px; display: block; }
+    .acc-bank { font-size: 13px; color: #888; margin-bottom: 6px; }
+    .acc-number { font-size: 22px; font-weight: 700; letter-spacing: 0.05em; color: #fff; margin-bottom: 4px; }
+    .acc-name { font-size: 14px; color: #aaa; }
+    .copy-btn { width: 100%; background: #fff; color: #000; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; padding: 15px; cursor: pointer; margin-top: 14px; letter-spacing: 0.02em; }
+    .copy-btn:active { background: #ddd; }
+    .notice { padding: 16px 24px 0; }
+    .notice-box { background: #111; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 14px 16px; }
+    .notice-text { font-size: 12px; color: #666; line-height: 1.7; }
+    .notice-text b { color: #FF2D9B; font-weight: 600; }
+    .error-box { background: #1a0a10; border: 1px solid #5a0a2a; border-radius: 16px; padding: 24px; text-align: center; margin-top: 8px; }
+    .error-icon { font-size: 32px; margin-bottom: 10px; }
+    .error-msg { font-size: 14px; color: #c06080; line-height: 1.6; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="hero">
+      <div class="hero-tag">👕 상여자 티셔츠 공동구매</div>
+      <div class="hero-title">입금 안내</div>
+      <div class="hero-sub">휴대폰 번호 뒷 4자리를 입력하면<br>주문 내역과 입금 계좌를 확인할 수 있어요</div>
+    </div>
+
+    <div class="input-section">
+      <label class="input-label">휴대폰 번호 뒷 4자리</label>
+      <div class="input-row">
+        <input class="phone-input" type="tel" maxlength="4" placeholder="0000" id="phoneInput" inputmode="numeric" />
+        <button class="search-btn" onclick="lookup()">조회</button>
+      </div>
+      <div class="hint">예) 010-1234-<b style="color:#FF2D9B">5678</b> → 5678 입력</div>
+    </div>
+
+    <div class="result" id="resultArea"></div>
+
+    <div class="notice">
+      <div class="notice-box">
+        <div class="notice-text">
+          <b>입금 시 주의사항</b><br>
+          · 입금자명을 본인 이름으로 해주세요<br>
+          · 아래 금액과 정확히 일치하게 입금해주세요<br>
+          · 문의사항은 홍하나에게 연락주세요
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const DB = [
+      { name: "강문정", last4: "5557", S:0, M:2, L:0, XL:0, XXL:1, total:3, amount:78000 },
+      { name: "김용주", last4: "8279", S:0, M:0, L:1, XL:0, XXL:0, total:1, amount:26000 },
+      { name: "권유진", last4: "3815", S:0, M:1, L:1, XL:0, XXL:0, total:2, amount:52000 },
+      { name: "나지혜", last4: "8302", S:1, M:0, L:0, XL:0, XXL:0, total:1, amount:26000 },
+      { name: "안중혁", last4: "8456", S:0, M:0, L:1, XL:0, XXL:0, total:1, amount:26000 },
+      { name: "조은미", last4: "2667", S:1, M:0, L:0, XL:0, XXL:0, total:1, amount:26000 },
+      { name: "박수현", last4: "0494", S:1, M:0, L:0, XL:0, XXL:0, total:1, amount:26000 },
+      { name: "한지현", last4: "5799", S:0, M:0, L:1, XL:0, XXL:0, total:1, amount:26000 },
+      { name: "김가영", last4: "6521", S:0, M:1, L:0, XL:0, XXL:1, total:2, amount:52000 },
+      { name: "강은아", last4: "1601", S:1, M:0, L:0, XL:0, XXL:0, total:1, amount:26000 },
+      { name: "양현서", last4: "4160", S:1, M:1, L:0, XL:0, XXL:0, total:2, amount:52000 },
+      { name: "정홍미", last4: "8084", S:0, M:1, L:0, XL:0, XXL:0, total:1, amount:26000 },
+      { name: "김지인", last4: "5205", S:1, M:3, L:0, XL:1, XXL:0, total:5, amount:130000 },
+      { name: "김서이", last4: "9715", S:0, M:0, L:0, XL:1, XXL:0, total:1, amount:26000 },
+      { name: "황인",   last4: "7806", S:1, M:2, L:0, XL:0, XXL:0, total:3, amount:78000 },
+      { name: "강지수", last4: "6252", S:1, M:0, L:0, XL:0, XXL:0, total:1, amount:26000 },
+      { name: "이은서", last4: "3419", S:0, M:2, L:0, XL:0, XXL:0, total:2, amount:52000 },
+      { name: "임민중", last4: "4974", S:0, M:0, L:0, XL:1, XXL:0, total:1, amount:26000 },
+      { name: "윤주혁", last4: "5277", S:0, M:0, L:0, XL:1, XXL:0, total:1, amount:26000 },
+      { name: "김성현", last4: "5220", S:0, M:1, L:0, XL:0, XXL:0, total:1, amount:26000 },
+      { name: "윤민경", last4: "4279", S:0, M:0, L:1, XL:0, XXL:0, total:1, amount:26000 },
+      { name: "홍하나", last4: "4856", S:0, M:2, L:2, XL:0, XXL:0, total:4, amount:104000 },
+      { name: "우정원", last4: "5371", S:0, M:2, L:0, XL:0, XXL:0, total:2, amount:52000 },
+    ];
+
+    function lookup() {
+      const v = document.getElementById('phoneInput').value.trim();
+      const area = document.getElementById('resultArea');
+      if (v.length !== 4) {
+        area.innerHTML = '<div class="error-box"><div class="error-icon">🔍</div><div class="error-msg">뒷 4자리를 정확히 입력해주세요</div></div>';
+        area.className = 'result show';
+        return;
+      }
+      const matches = DB.filter(d => d.last4 === v);
+      if (!matches.length) {
+        area.innerHTML = '<div class="error-box"><div class="error-icon">😅</div><div class="error-msg">해당 번호로 접수된 내역이 없어요<br>번호를 다시 확인해주세요</div></div>';
+        area.className = 'result show';
+        return;
+      }
+      let cards = '';
+      matches.forEach(p => {
+        const sizes = [
+          { label: 'S 사이즈', count: p.S },
+          { label: 'M 사이즈', count: p.M },
+          { label: 'L 사이즈', count: p.L },
+          { label: 'XL 사이즈', count: p.XL },
+          { label: '2XL 사이즈', count: p.XXL },
+        ].filter(s => s.count > 0);
+        const sizeRows = sizes.map(s =>
+          `<div class="size-row"><span class="size-label">${s.label}</span><span class="size-badge">${s.count}장</span></div>`
+        ).join('');
+        cards += `
+        <div class="result-card" style="margin-bottom:16px;">
+          <div class="name-banner">
+            <div class="name-hello">주문자</div>
+            <div class="name-main">${p.name}</div>
+            <div class="name-total">총 ${p.total}장 주문</div>
+          </div>
+          <div class="order-section">
+            <div class="section-title">사이즈별 수량</div>
+            ${sizeRows}
+          </div>
+          <div class="price-section">
+            <div class="price-label">납부 금액</div>
+            <div class="price-amount">₩${p.amount.toLocaleString()}</div>
+          </div>
+        </div>`;
+      });
+      area.innerHTML = cards + `
+      <div style="padding:0; margin-top:4px;">
+        <div class="account-card">
+          <span class="acc-tag">입금 계좌</span>
+          <div class="acc-bank">카카오뱅크</div>
+          <div class="acc-number">3333-16-7883270</div>
+          <div class="acc-name">홍하나</div>
+          <button class="copy-btn" onclick="copyAccount()">계좌번호 복사</button>
+        </div>
+      </div>`;
+      area.className = 'result show';
+    }
+
+    function copyAccount() {
+      navigator.clipboard.writeText('3333167883270').then(() => {
+        const btn = document.querySelector('.copy-btn');
+        btn.textContent = '✓ 복사됐어요!';
+        btn.style.background = '#FF2D9B';
+        btn.style.color = '#fff';
+        setTimeout(() => { btn.textContent = '계좌번호 복사'; btn.style.background = '#fff'; btn.style.color = '#000'; }, 2000);
+      });
+    }
+
+    document.getElementById('phoneInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') lookup();
+    });
+  </script>
+</body>
+</html>
