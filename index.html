@@ -14,31 +14,30 @@
     .hero-sub { font-size: 14px; color: #888; line-height: 1.6; }
     .input-section { padding: 32px 24px 0; }
     .input-label { font-size: 12px; letter-spacing: 0.1em; color: #FF2D9B; margin-bottom: 10px; display: block; }
-    .input-row { display: flex; gap: 10px; align-items: center; }
-    .phone-input { flex: 1; background: #111; border: 1px solid #333; border-radius: 12px; color: #fff; font-size: 22px; font-weight: 600; padding: 16px 20px; text-align: center; letter-spacing: 0.2em; outline: none; }
+    .input-row { display: flex; flex-direction: column; gap: 10px; }
+    .phone-input { width: 100%; background: #111; border: 1px solid #333; border-radius: 12px; color: #fff; font-size: 22px; font-weight: 600; padding: 16px 20px; text-align: center; letter-spacing: 0.2em; outline: none; }
     .phone-input:focus { border-color: #FF2D9B; }
     .phone-input::placeholder { color: #444; font-size: 18px; letter-spacing: 0.1em; }
-    .search-btn { background: #FF2D9B; border: none; border-radius: 12px; color: #fff; font-size: 14px; font-weight: 700; padding: 16px 20px; cursor: pointer; white-space: nowrap; letter-spacing: 0.05em; }
+    .search-btn { width: 100%; background: #FF2D9B; border: none; border-radius: 12px; color: #fff; font-size: 14px; font-weight: 700; padding: 16px 20px; cursor: pointer; letter-spacing: 0.05em; }
     .search-btn:active { opacity: 0.8; transform: scale(0.97); }
     .hint { font-size: 12px; color: #555; margin-top: 10px; text-align: center; }
     .result { display: none; padding: 28px 24px 0; }
     .result.show { display: block; }
-    .result-card { background: #111; border: 0.5px solid #222; border-radius: 20px; overflow: hidden; }
+    .result-card { background: #111; border: 0.5px solid #222; border-radius: 20px; overflow: hidden; margin-bottom: 16px; }
     .name-banner { background: linear-gradient(135deg, #FF2D9B 0%, #c0006e 100%); padding: 24px; }
     .name-hello { font-size: 12px; letter-spacing: 0.12em; color: rgba(255,255,255,0.75); margin-bottom: 6px; }
     .name-main { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
     .name-total { font-size: 13px; color: rgba(255,255,255,0.8); margin-top: 4px; }
-    .order-section { padding: 20px 20px 0; }
+    .order-section { padding: 20px; }
     .section-title { font-size: 11px; letter-spacing: 0.12em; color: #555; margin-bottom: 12px; }
     .size-row { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 0.5px solid #1e1e1e; }
     .size-row:last-child { border-bottom: none; }
     .size-label { font-size: 16px; font-weight: 500; color: #ddd; }
     .size-badge { background: #FF2D9B; color: #fff; font-size: 12px; font-weight: 700; padding: 4px 12px; border-radius: 20px; }
-    .price-section { padding: 20px; border-top: 0.5px solid #1e1e1e; margin-top: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .price-section { padding: 20px; border-top: 0.5px solid #1e1e1e; display: flex; justify-content: space-between; align-items: center; }
     .price-label { font-size: 13px; color: #777; }
     .price-amount { font-size: 28px; font-weight: 800; color: #FF2D9B; letter-spacing: -1px; }
-    .account-section { padding: 0 24px; margin-top: 20px; }
-    .account-card { background: #111; border: 1px solid #2a2a2a; border-radius: 20px; padding: 20px; }
+    .account-card { background: #111; border: 1px solid #2a2a2a; border-radius: 20px; padding: 20px; margin-top: 4px; }
     .acc-tag { font-size: 11px; letter-spacing: 0.12em; color: #FF2D9B; margin-bottom: 12px; display: block; }
     .acc-bank { font-size: 13px; color: #888; margin-bottom: 6px; }
     .acc-number { font-size: 22px; font-weight: 700; letter-spacing: 0.05em; color: #fff; margin-bottom: 4px; }
@@ -52,6 +51,13 @@
     .error-box { background: #1a0a10; border: 1px solid #5a0a2a; border-radius: 16px; padding: 24px; text-align: center; margin-top: 8px; }
     .error-icon { font-size: 32px; margin-bottom: 10px; }
     .error-msg { font-size: 14px; color: #c06080; line-height: 1.6; }
+
+    /* 태블릿 이상에서는 가로 배치 */
+    @media (min-width: 480px) {
+      .input-row { flex-direction: row; }
+      .phone-input { flex: 1; }
+      .search-btn { flex: 0 0 auto; width: auto; padding: 16px 32px; }
+    }
   </style>
 </head>
 <body>
@@ -139,7 +145,7 @@
           `<div class="size-row"><span class="size-label">${s.label}</span><span class="size-badge">${s.count}장</span></div>`
         ).join('');
         cards += `
-        <div class="result-card" style="margin-bottom:16px;">
+        <div class="result-card">
           <div class="name-banner">
             <div class="name-hello">주문자</div>
             <div class="name-main">${p.name}</div>
@@ -156,14 +162,12 @@
         </div>`;
       });
       area.innerHTML = cards + `
-      <div style="padding:0; margin-top:4px;">
-        <div class="account-card">
-          <span class="acc-tag">입금 계좌</span>
-          <div class="acc-bank">카카오뱅크</div>
-          <div class="acc-number">3333-16-7883270</div>
-          <div class="acc-name">홍하나</div>
-          <button class="copy-btn" onclick="copyAccount()">계좌번호 복사</button>
-        </div>
+      <div class="account-card">
+        <span class="acc-tag">입금 계좌</span>
+        <div class="acc-bank">카카오뱅크</div>
+        <div class="acc-number">3333-16-7883270</div>
+        <div class="acc-name">홍하나</div>
+        <button class="copy-btn" onclick="copyAccount()">계좌번호 복사</button>
       </div>`;
       area.className = 'result show';
     }
