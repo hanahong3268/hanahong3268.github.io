@@ -2,26 +2,52 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>상여자 티셔츠 입금 안내</title>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { width: 100%; overflow-x: hidden; }
     body { font-family: -apple-system, BlinkMacSystemFont, 'Pretendard', sans-serif; }
-    .wrap { background: #000; min-height: 100vh; padding: 0 0 60px; color: #fff; }
-    .hero { padding: 48px 24px 32px; text-align: center; border-bottom: 0.5px solid #222; }
+    .wrap { background: #000; min-height: 100vh; padding: 0 0 60px; color: #fff; width: 100%; }
+    .hero { padding: 48px 20px 32px; text-align: center; border-bottom: 0.5px solid #222; }
     .hero-tag { font-size: 11px; letter-spacing: 0.15em; color: #FF2D9B; text-transform: uppercase; margin-bottom: 12px; }
     .hero-title { font-size: 28px; font-weight: 700; letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 8px; }
     .hero-sub { font-size: 14px; color: #888; line-height: 1.6; }
-    .input-section { padding: 32px 24px 0; }
+    .input-section { padding: 32px 20px 0; }
     .input-label { font-size: 12px; letter-spacing: 0.1em; color: #FF2D9B; margin-bottom: 10px; display: block; }
-    .input-row { display: flex; flex-direction: column; gap: 10px; }
-    .phone-input { width: 100%; background: #111; border: 1px solid #333; border-radius: 12px; color: #fff; font-size: 22px; font-weight: 600; padding: 16px 20px; text-align: center; letter-spacing: 0.2em; outline: none; }
+    .input-row { display: flex; flex-direction: column; gap: 10px; width: 100%; }
+    .phone-input { 
+      width: 100%; 
+      background: #111; 
+      border: 1px solid #333; 
+      border-radius: 12px; 
+      color: #fff; 
+      font-size: 22px; 
+      font-weight: 600; 
+      padding: 16px 20px; 
+      text-align: center; 
+      letter-spacing: 0.2em; 
+      outline: none;
+      box-sizing: border-box;
+    }
     .phone-input:focus { border-color: #FF2D9B; }
     .phone-input::placeholder { color: #444; font-size: 18px; letter-spacing: 0.1em; }
-    .search-btn { width: 100%; background: #FF2D9B; border: none; border-radius: 12px; color: #fff; font-size: 14px; font-weight: 700; padding: 16px 20px; cursor: pointer; letter-spacing: 0.05em; }
+    .search-btn { 
+      width: 100%; 
+      background: #FF2D9B; 
+      border: none; 
+      border-radius: 12px; 
+      color: #fff; 
+      font-size: 14px; 
+      font-weight: 700; 
+      padding: 16px 20px; 
+      cursor: pointer; 
+      letter-spacing: 0.05em;
+      box-sizing: border-box;
+    }
     .search-btn:active { opacity: 0.8; transform: scale(0.97); }
     .hint { font-size: 12px; color: #555; margin-top: 10px; text-align: center; }
-    .result { display: none; padding: 28px 24px 0; }
+    .result { display: none; padding: 28px 20px 0; }
     .result.show { display: block; }
     .result-card { background: #111; border: 0.5px solid #222; border-radius: 20px; overflow: hidden; margin-bottom: 16px; }
     .name-banner { background: linear-gradient(135deg, #FF2D9B 0%, #c0006e 100%); padding: 24px; }
@@ -42,9 +68,22 @@
     .acc-bank { font-size: 13px; color: #888; margin-bottom: 6px; }
     .acc-number { font-size: 22px; font-weight: 700; letter-spacing: 0.05em; color: #fff; margin-bottom: 4px; }
     .acc-name { font-size: 14px; color: #aaa; }
-    .copy-btn { width: 100%; background: #fff; color: #000; border: none; border-radius: 12px; font-size: 15px; font-weight: 700; padding: 15px; cursor: pointer; margin-top: 14px; letter-spacing: 0.02em; }
+    .copy-btn { 
+      width: 100%; 
+      background: #fff; 
+      color: #000; 
+      border: none; 
+      border-radius: 12px; 
+      font-size: 15px; 
+      font-weight: 700; 
+      padding: 15px; 
+      cursor: pointer; 
+      margin-top: 14px; 
+      letter-spacing: 0.02em;
+      box-sizing: border-box;
+    }
     .copy-btn:active { background: #ddd; }
-    .notice { padding: 16px 24px 0; }
+    .notice { padding: 16px 20px 0; }
     .notice-box { background: #111; border: 0.5px solid #2a2a2a; border-radius: 12px; padding: 14px 16px; }
     .notice-text { font-size: 12px; color: #666; line-height: 1.7; }
     .notice-text b { color: #FF2D9B; font-weight: 600; }
@@ -52,11 +91,14 @@
     .error-icon { font-size: 32px; margin-bottom: 10px; }
     .error-msg { font-size: 14px; color: #c06080; line-height: 1.6; }
 
-    /* 태블릿 이상에서는 가로 배치 */
     @media (min-width: 480px) {
+      .hero { padding: 48px 24px 32px; }
+      .input-section { padding: 32px 24px 0; }
       .input-row { flex-direction: row; }
       .phone-input { flex: 1; }
       .search-btn { flex: 0 0 auto; width: auto; padding: 16px 32px; }
+      .result { padding: 28px 24px 0; }
+      .notice { padding: 16px 24px 0; }
     }
   </style>
 </head>
